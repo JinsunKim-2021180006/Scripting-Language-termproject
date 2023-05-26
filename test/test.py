@@ -13,3 +13,9 @@ print(response.text)
 queryURL = url+queryParams
 response = requests.get(queryURL)
 print(response.text)
+
+
+window = tkinter.Tk()
+window.title("지구별")
+
+frame = tkinter.Frame(window)
