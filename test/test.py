@@ -1,21 +1,24 @@
 import requests
 import xml.etree.ElementTree as ET
-import tkinter
+from tkinter import *
+from tkinter import font
 
-url = 'https://api.odcloud.kr/api/15067819/v1/uddi:bab0fa12-d7d7-4e47-975c-e35d424ae165?page=1&perPage=10&returnType=XML'
+url = 'http://www.sky-map.org/?object=vega'
 
-service_key = "/ruEDWbFRa8SMf4ev1DPLwU307V7q7mQg9PPlx7euo7NQ+ktMmwxuICWtFUwJN8BKLv+HpKoHipHpOdeVE6qCw=="
-queryParams = {'serviceKey': service_key}
+# # URL에서 XML 데이터 가져오기
+# response = requests.get(url)
+# xml_string = response.text
 
-response = requests.get(url, params=queryParams)
-print(response.text)
+# # XML 파싱
+# root = ET.fromstring(xml_string)
 
-queryURL = url+queryParams
-response = requests.get(queryURL)
-print(response.text)
+# # request 요소 찾기
+# request_element = root.find('request')
 
+# # 값 설정
+# star = input()
+# request_element.text = star
 
-window = tkinter.Tk()
-window.title("지구별")
-
-frame = tkinter.Frame(window)
+# # 수정된 XML 출력
+# modified_xml = ET.tostring(root, encoding='utf-8')
+# print(modified_xml.decode('utf-8'))
