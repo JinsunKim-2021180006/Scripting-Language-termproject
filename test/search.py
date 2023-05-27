@@ -1,14 +1,10 @@
-import requests
 import xml.etree.ElementTree as ET
-import tkinter as tk
 from tkinter import *
+import requests
 
-from opensite import *
 
-#pip install geocoder
-import geocoder
+# 아래 함수를 매인에 추가(해더 잊지말기)
 
-#검색창 만들기
 def search():
     # XML받아오기
     def XML_parse():
@@ -89,7 +85,7 @@ def search():
     #윈도우 만들기
     searchwindow = Toplevel(window)
     searchwindow.title("별자리 검색")
-    searchwindow.geometry('250x200')
+    searchwindow.geometry('250x400')
 
     #상단 문구
     label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("돋음", 10))
@@ -111,38 +107,3 @@ def search():
     #받아온 값을 StarList에 넣어준다
     StarList = XML_parse()
 
-
-
-# 현재 위치의 위도와 경도 가져오기
-g = geocoder.ip('me')
-latitude, longitude = g.latlng
-
-# 현재 위치의 위도와 경도 출력
-print(latitude, longitude)
-
-
-window = tk.Tk()
-window.title("지구별")
-window.geometry("700x500")
-
-string_var = tk.StringVar()
-
-position="현 위치/설정한 위치"
-
-string_var.set("지금 "+"위도:" + str(latitude) + "경도:" + str(longitude) +"의 하늘에는 ... ")
-
-label = tk.Label(window, textvariable=string_var, font=("Helvetica", 15))
-label.place(x=150,y=0)
-
-frame = tk.Frame(window)
-frame.place(x=150, y=30)
-
-button = tk.Button(frame, text="별자리 검색하기", command=search)
-button.pack()
-
-
-OpenWebbutton = tk.Button(frame, text="하늘지도 열기", command=open_url)
-OpenWebbutton.pack()
-
-
-window.mainloop()
