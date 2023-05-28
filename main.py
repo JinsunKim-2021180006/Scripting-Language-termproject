@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import *
 
 from opensite import *
+import PastSearch
 
 #pip install geocoder
 import geocoder
@@ -113,6 +114,14 @@ def search():
 
 
 
+
+def subsearch():
+    PastSearch.pastsearch()
+    
+
+    
+
+
 # 현재 위치의 위도와 경도 가져오기
 g = geocoder.ip('me')
 latitude, longitude = g.latlng
@@ -143,6 +152,12 @@ button.pack()
 
 OpenWebbutton = tk.Button(frame, text="하늘지도 열기", command=open_url)
 OpenWebbutton.pack()
+
+button = tk.Button(frame, text="과거 천체 현상 검색", command=subsearch)
+button.pack()
+
+
+
 
 
 window.mainloop()
