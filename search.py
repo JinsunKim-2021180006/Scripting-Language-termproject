@@ -74,6 +74,7 @@ def Search(window):
     searchwindow = Toplevel(window)
     searchwindow.title("별자리 검색")
     searchwindow.geometry('250x200')
+    searchwindow.config(bg="#231B61")
 
     label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("돋음", 10))
     label.grid(column=0, row=0)

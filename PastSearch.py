@@ -51,6 +51,7 @@ def pastsearch():
     subsearchwindow = Toplevel()
     subsearchwindow.title("과거 천체 현상 검색")
     subsearchwindow.geometry('250x400')
+    subsearchwindow.config(bg="#231B61")
 
     Year = Combobox(subsearchwindow)
     Year['values'] = ( "2015","2016","2017","2018","2019","2020","2021","2022")
