@@ -4,6 +4,9 @@ import requests
 import xml.etree.ElementTree as ET
 from tkinter import *
 
+#pip install pywebview
+import webview
+
 def XML_parse():
     url = 'https://api.odcloud.kr/api/15067819/v1/uddi:bab0fa12-d7d7-4e47-975c-e35d424ae165?page=1&perPage=10&returnType=XML'
     service_key = "/ruEDWbFRa8SMf4ev1DPLwU307V7q7mQg9PPlx7euo7NQ+ktMmwxuICWtFUwJN8BKLv+HpKoHipHpOdeVE6qCw=="
@@ -65,27 +68,41 @@ def printResult(findInfo, printlist):
     printlist.insert("end",datalist[4]+"\n\n")
     printlist.configure(state='disabled')
 
-def confirm(input_text, printlist, StarList):
-    in_text = "검색어 : " + input_text.get()
+def confirm(where, input_text, printlist, StarList):
     findloc = print_dictionary(StarList, input_text.get())
-    printResult(findloc, printlist)
+    if where == 0:
+        printResult(findloc, printlist)
+    else:
+        openstarmap(findloc)
+
+
+def openstarmap(datalist):
+    
+    engName = datalist['SCIENTIFIC_NM']     #영어이름
+
+    url = "http://www.sky-map.org/?show_constellation_boundaries=0&zoom=2" +"&object=" + engName
+    webview.create_window('Web Content', url=url,min_size=(100,100))
+    webview.start()
+
 
 def Search(window):
     searchwindow = Toplevel(window)
     searchwindow.title("별자리 검색")
-    searchwindow.geometry('250x200')
+    searchwindow.geometry('300x300')
     searchwindow.config(bg="#231B61")
 
-    label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("돋음", 10))
+    label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("돋음", 10), background="#231B61",foreground="white")
     label.grid(column=0, row=0)
 
     input_text = Entry(searchwindow, width=30)
     input_text.grid(column=0, row=2)
 
-    button = Button(searchwindow, text="확인", command=lambda: confirm(input_text, printlist, StarList))
+    button = Button(searchwindow, text="확인", command=lambda: confirm(0,input_text, printlist, StarList))
     button.grid(column=1, row=2)
     copyButton = Button(searchwindow, text="복사하기", command=lambda: listcopy(printlist))
     copyButton.grid(column=0,row=3)
+    gomapButton = Button(searchwindow, text="별 보러가기", command=lambda: confirm(1,input_text,printlist,StarList))
+    gomapButton.grid(column=1,row=3)
 
     printlist = Text(searchwindow,width=35,height=50)
     printlist.place(x=0,y=80)

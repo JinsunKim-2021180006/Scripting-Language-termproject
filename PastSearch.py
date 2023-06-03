@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter.ttk import *
 import xml.etree.ElementTree as ET
 
+
 def parse_xml(xml_data):
     result_dict = {}
     root = ET.fromstring(xml_data)
@@ -13,7 +14,7 @@ def parse_xml(xml_data):
         for item in items.findall('item'):
             astro_title = item.find('astroTitle')
             astro_event = item.find('astroEvent')
-            if astro_title is not None and astro_event is not None:
+            if astro_title is not None:
                 result_dict[astro_title.text] = astro_event.text
             else: 
                 result_dict['0'] = '0'
@@ -23,14 +24,16 @@ def printData(DATA_DIC, printlist):
     printlist.configure(state='normal')
     printlist.delete("0.0","end")
     if len(DATA_DIC) == 0:
-        printlist.insert("end","해당 달에 일어난 사건이 없습니다.")
+        printlist.insert("end","해당 일자에 일어난 사건이 없습니다.")
     else:
         for title, event in DATA_DIC.items():
-            printlist.insert("end","사건 이름: ")
-            printlist.insert("end",title or "")
-            printlist.insert("end","\n")
-            printlist.insert("end","사건 내용: ")
-            printlist.insert("end",event or ""+"\n\n")
+            if title is not None:
+                printlist.insert("end","사건 이름: ")
+                printlist.insert("end",title or "")
+                printlist.insert("end","\n")
+                printlist.insert("end","사건 내용: ")
+                printlist.insert("end",event)
+                printlist.insert("end","\n")
         printlist.configure(state='disabled')
 
 def listcopy(printlist):
@@ -47,6 +50,7 @@ def upload_xml(Year, month, printlist):
     Data_Dic = parse_xml(xmldata)
     printData(Data_Dic, printlist)
 
+
 def pastsearch():
     subsearchwindow = Toplevel()
     subsearchwindow.title("과거 천체 현상 검색")
@@ -54,12 +58,12 @@ def pastsearch():
     subsearchwindow.config(bg="#231B61")
 
     Year = Combobox(subsearchwindow)
-    Year['values'] = ( "2015","2016","2017","2018","2019","2020","2021","2022")
+    Year['values'] = ( "2016","2017","2018","2019","2020","2021","2022")
     Year.set("검색할 연도")
     Year.config(state="readonly")
     Year.grid(column=0, row=0)
 
-    Ylable = Label(subsearchwindow, text="년(Year)",font=("돋음", 10))
+    Ylable = Label(subsearchwindow, text="년(Year)",font=("돋음", 10), background="#231B61",foreground="white")
     Ylable.grid(column=1, row=0)
     
     month = Combobox(subsearchwindow)
@@ -68,7 +72,7 @@ def pastsearch():
     month.config(state="readonly")
     month.grid(column=0, row=1)
 
-    Mlable = Label(subsearchwindow, text="월(Month)",font=("돋음", 10))
+    Mlable = Label(subsearchwindow, text="월(Month)",font=("돋음", 10), background="#231B61",foreground="white")
     Mlable.grid(column=1, row=1)
     
     go = Button(subsearchwindow, text="검색", command=lambda: upload_xml(Year, month, printlist))
