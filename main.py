@@ -8,6 +8,7 @@ from tkinter.ttk import Style
 from opensite import *
 import PastSearch
 import search
+import cv2
 #import teller
 
 #pip install geocoder
@@ -20,8 +21,53 @@ def gosearch():
 
 def subsearch():
     PastSearch.pastsearch()
-    
- 
+
+video_path ="resource/bg.gif"
+video = None
+vlabel =None
+framesub =None
+def InitVideo():
+    global video ,video_path,vlabel ,frame
+    # 비디오 파일 열기
+    video = cv2.VideoCapture(video_path)
+
+    # 비디오 크기 가져오기
+    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    # 비디오 프레임 표시할 레이블 생성
+    vlabel = Label(framesub, width=820, height=400)
+    vlabel.place(x=0, y=30)
+
+    # 비디오 플레이어 시작
+    show_frame()
+
+
+def show_frame():
+    global video, video_path, vlabel
+    # 비디오 프레임 읽기
+    ret, frame = video.read()
+
+    if ret:
+        # 프레임을 PIL 이미지로 변환
+        image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        photo = ImageTk.PhotoImage(image)
+
+        # 레이블에 이미지 표시
+        vlabel.config(image=photo)
+        vlabel.image = photo
+
+
+    else:
+        video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # 비디오 위치를 처음으로 되돌림
+    # 다음 프레임을 표시하기 위해 함수 재호출
+    window.after(30, show_frame)
+
+
+
+
+
+
 
 # 현재 위치의 위도와 경도 가져오기
 g = geocoder.ip('me')
@@ -40,6 +86,8 @@ photo = ImageTk.PhotoImage(resized_image)
 BG_label = Label(window, image=photo)
 BG_label.place(x=0, y=0, relwidth=1, relheight=1)  # 전체 창 크기에 맞춰 배경 이미지 표시
 
+InitVideo()
+framesub = window
 
 string_var = tk.StringVar()
 

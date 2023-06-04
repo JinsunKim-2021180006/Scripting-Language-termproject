@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6102fdc2-02f6-46f7-9931-19f2dd6df690" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/resource/background.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resource/bg.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,9 +26,18 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/82108/Desktop/과제/earth_star/Scripting-Language-termproject/test"
+    "last_opened_file_path": "C:/Users/82108/Desktop/과제/earth_star/Scripting-Language-termproject/resource"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\82108\Desktop\과제\earth_star\Scripting-Language-termproject\resource" />
+      <recent name="C:\Users\82108\Desktop\과제\earth_star\Scripting-Language-termproject\test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\82108\Desktop\과제\earth_star\Scripting-Language-termproject\resource" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Scripting-Language-termproject" />
