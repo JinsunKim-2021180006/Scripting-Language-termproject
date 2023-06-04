@@ -8,9 +8,11 @@ from tkinter.ttk import Style
 from opensite import *
 import PastSearch
 import search
+#import teller
 
 #pip install geocoder
 import geocoder
+
 
 def gosearch():
     search.Search(window)
