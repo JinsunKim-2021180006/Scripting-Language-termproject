@@ -13,9 +13,35 @@ import traceback
 import requests
 import xml.etree.ElementTree as ET
 import noti
+from tkinter import *
+from telepot.loop import MessageLoop
 
 
-
+bot = telepot.Bot(noti.TOKEN)
+def tel_search(input_text):
+    TOKEN = '6078174572:AAGdJ1nElVLS1CV_lC19aqfeycFszn387BQ'
+    url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
+    res_list = noti.getData(input_text)
+    msg = ''
+    for r in res_list:
+        print(str(datetime.now()).split('.')[0], r)
+        if len(r + msg) + 1 > noti.MAX_MSG_LENGTH:
+            noti.sendMessage(6100292453, msg)
+            msg = r + '\n'
+        else:
+            msg += r + '\n'
+        if msg:
+            noti.sendMessage(6100292453, msg)
+        else:
+            noti.sendMessage(6100292453, '해당하는 데이터가 없습니다.')
+    #bot.sendMessage(6100292453, noti.getData(input_text))  # 텔레그램으로 메시지 발송
+    """
+    params = {
+        'chat_id': '6100292453',
+        'text': input_text
+    }
+    response = requests.post(url, params)
+"""
 
 def XML_parse():
     url = 'https://api.odcloud.kr/api/15067819/v1/uddi:bab0fa12-d7d7-4e47-975c-e35d424ae165?page=1&perPage=10&returnType=XML'
@@ -106,23 +132,43 @@ def handle(msg):
     if not check:
         noti.sendMessage(chat_id, '모르는 명령어입니다.')
 
+def window():
+    run()
+    telwindow = Toplevel()
+    telwindow.title("텔레그램")
+    telwindow.geometry('200x80')
+    telwindow.config(bg="#231B61")
+
+    label = Label(telwindow, text="별자리 검색", font=("돋음", 10), background="#231B61", foreground="white")
+    label.grid(column=0, row=0)
+
+    input= Entry(telwindow, width=30)
+    input.grid(column=0, row=2)
+
+    button = Button(telwindow, text="확인", command=lambda: tel_search(input.get()))
+    button.grid(column=0, row=3)
 
 
+def run():
+    MessageLoop(bot, handle).run_as_thread()
 
-today = date.today()
-current_month = today.strftime('%Y%m')
 
-print( '[',today,']received token :', noti.TOKEN )
+def main(input_text):
+    today = date.today()
+    current_month = today.strftime('%Y%m')
 
-bot = telepot.Bot(noti.TOKEN)
-print(bot.getMe())
 
-bot.message_loop(handle)
+    print( '[',today,']received token :', noti.TOKEN )
 
-print('Listening...')
+    bot = telepot.Bot(noti.TOKEN)
+    print(bot.getMe())
 
-while 1:
-  time.sleep(10)
+    bot.message_loop(handle)
+
+    print('Listening...')
+
+    while 1:
+      time.sleep(10)
 
 
 """

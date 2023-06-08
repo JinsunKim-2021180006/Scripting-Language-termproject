@@ -9,7 +9,7 @@ from opensite import *
 import PastSearch
 import search
 import cv2
-#import teller
+import teller
 
 #pip install geocoder
 import geocoder
@@ -21,6 +21,11 @@ def gosearch():
 
 def subsearch():
     PastSearch.pastsearch()
+
+
+def tel():
+    teller.window()
+
 
 video_path ="resource/bg.gif"
 video = None
@@ -111,7 +116,6 @@ button.config(width=80, height=80)
 button.place(x=0,y=30)
 
 
-
 image = Image.open("resource/map.png")
 resized_image = image.resize((100, 100))
 photo_image = ImageTk.PhotoImage(resized_image)
@@ -130,6 +134,16 @@ historyButton.image = photo_image
 historyButton.config(width=80, height=80)
 historyButton.place(x=180,y=30)
 
+
+#텔레그램 버튼 추가
+image = Image.open("resource/tel.png")
+resized_image = image.resize((100, 100))
+photo_image = ImageTk.PhotoImage(resized_image)
+
+historyButton = tk.Button(window, image=photo_image, command=tel)
+historyButton.image = photo_image
+historyButton.config(width=80, height=80)
+historyButton.place(x=270,y=30)
 
 
 window.mainloop()
