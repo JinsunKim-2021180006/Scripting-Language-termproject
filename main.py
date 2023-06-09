@@ -10,6 +10,7 @@ import PastSearch
 import search
 import cv2
 import teller
+import map
 
 #pip install geocoder
 import geocoder
@@ -26,6 +27,9 @@ def subsearch():
 def tel():
     teller.window()
 
+
+def weather():
+    map.window()
 
 video_path ="resource/bg.gif"
 video = None
@@ -67,7 +71,6 @@ def show_frame():
         video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # 비디오 위치를 처음으로 되돌림
     # 다음 프레임을 표시하기 위해 함수 재호출
     window.after(30, show_frame)
-
 
 
 
@@ -145,5 +148,15 @@ historyButton.image = photo_image
 historyButton.config(width=80, height=80)
 historyButton.place(x=270,y=30)
 
+
+#기상/위치 정보 버튼 추가 (2023-06-09)
+image = Image.open("resource/weather.png")
+resized_image = image.resize((25, 25))
+photo_image = ImageTk.PhotoImage(resized_image)
+
+weatherButton = tk.Button(window, image=photo_image, command=weather)
+weatherButton.image = photo_image
+weatherButton.config(width=25, height=25)
+weatherButton.place(x=430,y=0)
 
 window.mainloop()

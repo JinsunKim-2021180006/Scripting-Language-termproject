@@ -1,19 +1,25 @@
 import requests
 import xml.etree.ElementTree as ET
+import gps
+import datetime
 
+
+current_datetime = datetime.datetime.now()
+day = current_datetime.strftime("%Y%m%d")
+time= current_datetime.strftime("%H%M%S")
 def lookUpWeather():
     url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'
     serviceKey = 'Nt9JLubbJypY+2kCOW3BhPuQjwuYm0o7eHRKSvBxk7aUk/CI9KgBzv06qHctRy26s56jTjqI0kdOKj1gy3oI8Q=='
     type = 'xml'  # 조회하고 싶은 type(json, xml 중 고름)
-    baseDate = '20230608'  # 조회하고싶은 날짜
-    baseTime = '0500'  # 조회하고싶은 시간
-    nx = '60'  # 위도
-    ny = '125'  # 경도
+    baseDate = day  # 조회하고싶은 날짜
+    baseTime = time[:4]  # 조회하고싶은 시간
+    nx = str(int(gps.latitude))  # 위도
+    ny = str(int(gps.longitude))  # 경도
 
     params = {
         'serviceKey': serviceKey,
-        'pageNo' : '1',
-        'numOfRows' : '1000',
+        'pageNo': '1',
+        'numOfRows': '1000',
         'dataType': type,
         'base_date': baseDate,
         'base_time': baseTime,
@@ -27,7 +33,6 @@ def lookUpWeather():
     root = ET.fromstring(xml_data)
     items = root.findall('.//item')
 
-    
     weather = None
     temperature = None
 
@@ -49,9 +54,20 @@ def lookUpWeather():
         if category == 'T3H' or category == 'T1H':
             temperature = '기온은 {}℃ 입니다.'.format(fcstValue)
 
+    """
     if weather is not None:
         print(weather)
     if temperature is not None:
         print(temperature)
+    """
+    result='현재 기상 정보가 없습니다.'
+    if weather is not None and temperature is not None:
+        result=weather+'\n'+temperature
 
-lookUpWeather()
+    return result
+
+if __name__ == "__main__":
+    print(lookUpWeather())
+
+
+

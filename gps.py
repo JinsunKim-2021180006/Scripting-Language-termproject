@@ -6,4 +6,5 @@ g = geocoder.ip('me')
 latitude, longitude = g.latlng
 
 # 현재 위치의 위도와 경도 출력
-print(latitude, longitude)
+if __name__ == "__main__":
+    print(latitude, longitude)
