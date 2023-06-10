@@ -3,11 +3,12 @@ import clipboard
 import requests
 import xml.etree.ElementTree as ET
 from tkinter import *
+from PIL import Image, ImageTk
 
 #pip install pywebview
 import webview
-
 import fileio
+
 def XML_parse():
     url = 'https://api.odcloud.kr/api/15067819/v1/uddi:bab0fa12-d7d7-4e47-975c-e35d424ae165?page=1&perPage=10&returnType=XML'
     service_key = "/ruEDWbFRa8SMf4ev1DPLwU307V7q7mQg9PPlx7euo7NQ+ktMmwxuICWtFUwJN8BKLv+HpKoHipHpOdeVE6qCw=="
@@ -85,31 +86,48 @@ def openstarmap(datalist):
     webview.create_window('Web Content', url=url,min_size=(800, 600))
     webview.start()
 
+def create_window_background(window):
+    image = Image.open("resource/sbg.jpg")
+    resized_image = image.resize((820, 400))
+    photo = ImageTk.PhotoImage(resized_image)
+
+    BG_label = Label(window, image=photo)
+    BG_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    # 반환하여 전역 변수로 유지
+    return photo
+
 
 def Search(window):
     searchwindow = Toplevel(window)
     searchwindow.title("별자리 검색")
-    searchwindow.geometry('300x300')
+    searchwindow.geometry('350x300')
     searchwindow.config(bg="#231B61")
 
-    label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("Helvetica", 10), background="#231B61",foreground="white")
-    label.grid(column=0, row=0)
+    photo = create_window_background(searchwindow)
+    
+    label = Label(searchwindow, text="★ 검색하기",font=("Helvetica", 15), background="#231B61",foreground="white")
+    label.place(x=50,y=10)
+    
+    input_text = Entry(searchwindow, width=20)
+    input_text.place(x=50, y=50)
 
-    input_text = Entry(searchwindow, width=30)
-    input_text.grid(column=0, row=2)
-
-    button = Button(searchwindow, text="확인", command=lambda: confirm(0,input_text, printlist, StarList))
-    button.grid(column=1, row=2)
+    button = Button(searchwindow, text="검색", command=lambda: confirm(0,input_text, printlist, StarList),highlightthickness=0)
+    button.place(x=250, y=50)
     copyButton = Button(searchwindow, text="복사하기", command=lambda: listcopy(printlist))
-    copyButton.place(x=0,y=50)
+    copyButton.place(x=50,y=80)
     gomapButton = Button(searchwindow, text="내보내기", command=lambda: fileio.save_to_file(printlist))
-    gomapButton.place(x=100,y=50)
+    gomapButton.place(x=150,y=80)
     gomapButton = Button(searchwindow, text="별 보러가기", command=lambda: confirm(1,input_text,printlist,StarList))
-    gomapButton.place(x=200,y=50)
+    gomapButton.place(x=250,y=80)
     
 
-    printlist = Text(searchwindow,width=35,height=50)
-    printlist.place(x=0,y=80)
+    printlist = Text(searchwindow,width=35,height=12)
+    printlist.place(x=50,y=120)
     printlist.configure(state='disabled')
 
     StarList = XML_parse()
+    
+    searchwindow.mainloop()
+    
+    

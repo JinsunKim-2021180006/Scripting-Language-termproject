@@ -4,6 +4,8 @@ import requests
 from tkinter import *
 from tkinter.ttk import *
 import xml.etree.ElementTree as ET
+from PIL import Image, ImageTk
+
 
 
 def parse_xml(xml_data):
@@ -51,37 +53,48 @@ def upload_xml(Year, month, printlist):
     printData(Data_Dic, printlist)
 
 
+def create_window_background(window):
+    image = Image.open("resource/sbg.jpg")
+    resized_image = image.resize((820, 400))
+    photo = ImageTk.PhotoImage(resized_image)
+
+    BG_label = Label(window, image=photo)
+    BG_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    # 반환하여 전역 변수로 유지
+    return photo
+
+
 def pastsearch():
     subsearchwindow = Toplevel()
     subsearchwindow.title("과거 천체 현상 검색")
-    subsearchwindow.geometry('250x400')
+    subsearchwindow.geometry('300x400')
     subsearchwindow.config(bg="#231B61")
+
+    photo = create_window_background(subsearchwindow)
+
+    label = Label(subsearchwindow, text="★의 ★일",font=("Helvetica", 15), background="#231B61",foreground="white")
+    label.place(x=50,y=10)
 
     Year = Combobox(subsearchwindow)
     Year['values'] = ( "2016","2017","2018","2019","2020","2021","2022")
     Year.set("검색할 연도")
     Year.config(state="readonly")
-    Year.grid(column=0, row=0)
-
-    Ylable = Label(subsearchwindow, text="년(Year)",font=("돋음", 10), background="#231B61",foreground="white")
-    Ylable.grid(column=1, row=0)
+    Year.place(x=50, y=50)
     
     month = Combobox(subsearchwindow)
     month['values'] = ( "01","02","03","04","05","06","07","08","09","10","11","12")
     month.set("검색할 달")
     month.config(state="readonly")
-    month.grid(column=0, row=1)
-
-    Mlable = Label(subsearchwindow, text="월(Month)",font=("Helvetica", 10), background="#231B61",foreground="white")
-    Mlable.grid(column=1, row=1)
+    month.place(x=50,y=80)
     
     go = Button(subsearchwindow, text="검색", command=lambda: upload_xml(Year, month, printlist))
-    go.grid(column=0,row=2)
+    go.place(x=50,y=110)
     copyButton = Button(subsearchwindow, text="복사하기", command=lambda: listcopy(printlist))
-    copyButton.grid(column=1,row=2)
+    copyButton.place(x=150,y=110)
 
-    printlist = Text(subsearchwindow,width=35,height=50, wrap="word")
-    printlist.place(x=0,y=100)
+    printlist = Text(subsearchwindow,width=30,height=20, wrap="word")
+    printlist.place(x=50,y=150)
     printlist.configure(state='disabled')
     
     subsearchwindow.mainloop()
