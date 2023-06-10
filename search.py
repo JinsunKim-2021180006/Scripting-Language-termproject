@@ -7,6 +7,7 @@ from tkinter import *
 #pip install pywebview
 import webview
 
+import fileio
 def XML_parse():
     url = 'https://api.odcloud.kr/api/15067819/v1/uddi:bab0fa12-d7d7-4e47-975c-e35d424ae165?page=1&perPage=10&returnType=XML'
     service_key = "/ruEDWbFRa8SMf4ev1DPLwU307V7q7mQg9PPlx7euo7NQ+ktMmwxuICWtFUwJN8BKLv+HpKoHipHpOdeVE6qCw=="
@@ -81,7 +82,7 @@ def openstarmap(datalist):
     engName = datalist['SCIENTIFIC_NM']     #영어이름
 
     url = "http://www.sky-map.org/?show_constellation_boundaries=0&zoom=2" +"&object=" + engName
-    webview.create_window('Web Content', url=url,min_size=(100,100))
+    webview.create_window('Web Content', url=url,min_size=(800, 600))
     webview.start()
 
 
@@ -91,7 +92,7 @@ def Search(window):
     searchwindow.geometry('300x300')
     searchwindow.config(bg="#231B61")
 
-    label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("돋음", 10), background="#231B61",foreground="white")
+    label = Label(searchwindow, text="별자리를 찾아볼까요?",font=("Helvetica", 10), background="#231B61",foreground="white")
     label.grid(column=0, row=0)
 
     input_text = Entry(searchwindow, width=30)
@@ -100,9 +101,12 @@ def Search(window):
     button = Button(searchwindow, text="확인", command=lambda: confirm(0,input_text, printlist, StarList))
     button.grid(column=1, row=2)
     copyButton = Button(searchwindow, text="복사하기", command=lambda: listcopy(printlist))
-    copyButton.grid(column=0,row=3)
+    copyButton.place(x=0,y=50)
+    gomapButton = Button(searchwindow, text="내보내기", command=lambda: fileio.save_to_file(printlist))
+    gomapButton.place(x=100,y=50)
     gomapButton = Button(searchwindow, text="별 보러가기", command=lambda: confirm(1,input_text,printlist,StarList))
-    gomapButton.grid(column=1,row=3)
+    gomapButton.place(x=200,y=50)
+    
 
     printlist = Text(searchwindow,width=35,height=50)
     printlist.place(x=0,y=80)

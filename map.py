@@ -5,6 +5,8 @@ from io import BytesIO
 import gps
 import weather
 
+
+
 latitude, longitude = gps.latitude,gps.longitude
 api_key = "AIzaSyDrpg0DcFwffvsWKL8q1mQoJ5-2j4c8K9w"
 weather_inform=weather.lookUpWeather()
@@ -42,7 +44,7 @@ def window():
     weatherwindow.title("위치/날씨정보")
     weatherwindow.geometry('500x300')
 
-    label = Label(weatherwindow, text=weather_inform, font=("돋음", 15), foreground="black")
+    label = Label(weatherwindow, text=weather_inform, font=("Helvetica", 15), foreground="white",background="indigo")
     label.grid(column=0, row=0)
 
     canvas = Canvas(weatherwindow, width=500, height=300)
@@ -52,10 +54,6 @@ def window():
     canvas.create_image(0, 0, anchor="nw", image=image)
 
     weatherwindow.mainloop()
-
-
-
-
 
 
 

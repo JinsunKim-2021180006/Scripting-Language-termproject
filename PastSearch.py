@@ -72,7 +72,7 @@ def pastsearch():
     month.config(state="readonly")
     month.grid(column=0, row=1)
 
-    Mlable = Label(subsearchwindow, text="월(Month)",font=("돋음", 10), background="#231B61",foreground="white")
+    Mlable = Label(subsearchwindow, text="월(Month)",font=("Helvetica", 10), background="#231B61",foreground="white")
     Mlable.grid(column=1, row=1)
     
     go = Button(subsearchwindow, text="검색", command=lambda: upload_xml(Year, month, printlist))
